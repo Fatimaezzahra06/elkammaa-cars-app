@@ -1,0 +1,1 @@
+export const API_URL = "http://192.168.137.106/uandi/api";
