@@ -4,172 +4,140 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
- Image,
+  ImageBackground,
 } from "react-native";
 
 import { router } from "expo-router";
-import logo from "../assets/logo.png";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomeScreen() {
+
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
 
-      <Text style={styles.title}>Elkammaa Cars</Text>
+    <ImageBackground
+      source={{
+        uri: "https://images.unsplash.com/photo-1503376780353-7e6692767b70",
+      }}
+      style={styles.background}
+      resizeMode="cover"
+    >
 
-      <Text style={styles.subtitle}>
-        Louez votre voiture facilement et rapidement
-      </Text>
+      <View style={styles.overlay}>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/login")}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+        <Text style={styles.logo}>
+          ELKAMMAA CARS
+        </Text>
 
-      <TouchableOpacity
-        style={styles.outlineButton}
-        onPress={() => router.push("/register")}
-      >
-        <Text style={styles.outlineText}>Register</Text>
-      </TouchableOpacity>
+        <Text style={styles.title}>
+          Luxury Car Rental
+        </Text>
 
-      <TouchableOpacity
-        style={styles.menuButton}
-        onPress={() => router.push("/cars")}
-      >
-        <Text style={styles.menuText}>Voir les voitures</Text>
-      </TouchableOpacity>
+        <Text style={styles.subtitle}>
+          Experience premium driving
+          with the best luxury cars.
+        </Text>
 
-      <TouchableOpacity
-        style={styles.menuButton}
-        onPress={() => router.push("/profile")}
-      >
-        <Text style={styles.menuText}>Profile</Text>
-      </TouchableOpacity>
-
-      <View style={styles.bottomMenu}>
-        <TouchableOpacity onPress={() => router.push("/")}>
-          <Text style={styles.bottomText}>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => router.push("/cars")}>
-          <Text style={styles.bottomText}>Cars</Text>
-        </TouchableOpacity>
+        {/* BUTTON CARS */}
 
         <TouchableOpacity
-          onPress={() => router.push("/reservations")}
+          onPress={() => router.push("/cars")}
         >
-          <Text style={styles.bottomText}>Booking</Text>
+
+          <LinearGradient
+            colors={["#ffffff", "#d9d9d9"]}
+            style={styles.button}
+          >
+
+            <Text style={styles.buttonText}>
+              Explorer les voitures
+            </Text>
+
+          </LinearGradient>
+
         </TouchableOpacity>
 
+        {/* BUTTON LOGIN */}
+
         <TouchableOpacity
-          onPress={() => router.push("/profile")}
+          style={styles.secondaryButton}
+          onPress={() => router.push("/login")}
         >
-          <Text style={styles.bottomText}>Profile</Text>
+
+          <Text style={styles.secondaryText}>
+            Se connecter
+          </Text>
+
         </TouchableOpacity>
+
       </View>
-    </View>
+
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+
+  background: {
     flex: 1,
-    backgroundColor: "#000",
     justifyContent: "center",
-    paddingHorizontal: 24,
-    paddingBottom: 90,
+  },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.70)",
+    justifyContent: "center",
+    paddingHorizontal: 30,
   },
 
   logo: {
-    width: 200,
-    height: 90,
-    alignSelf: "center",
-    marginBottom: 25,
-    borderRadius: 20,
-    resizeMode: "cover",
+    color: "#fff",
+    fontSize: 18,
+    letterSpacing: 4,
+    marginBottom: 20,
+    textAlign: "center",
   },
 
   title: {
     color: "#fff",
-    fontSize: 32,
+    fontSize: 42,
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 18,
   },
 
   subtitle: {
-    color: "#ccc",
+    color: "#d1d1d1",
     textAlign: "center",
-    marginBottom: 40,
-    marginTop: 8,
     fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 50,
   },
 
   button: {
-    backgroundColor: "#fff",
-    paddingVertical: 15,
+    paddingVertical: 18,
     borderRadius: 18,
-    marginBottom: 14,
+    alignItems: "center",
+    marginBottom: 18,
   },
 
   buttonText: {
     color: "#000",
-    textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
 
-  outlineButton: {
+  secondaryButton: {
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.25)",
-    backgroundColor: "rgba(255,255,255,0.06)",
-    paddingVertical: 15,
+    borderColor: "rgba(255,255,255,0.3)",
+    paddingVertical: 18,
     borderRadius: 18,
-    marginBottom: 25,
+    alignItems: "center",
   },
 
-  outlineText: {
+  secondaryText: {
     color: "#fff",
-    textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
 
-  menuButton: {
-    backgroundColor: "rgba(255,255,255,0.08)",
-    paddingVertical: 15,
-    borderRadius: 18,
-    marginBottom: 14,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.18)",
-  },
-
-  menuText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-
-  bottomMenu: {
-    position: "absolute",
-    bottom: 18,
-    left: 18,
-    right: 18,
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.15)",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 16,
-    borderRadius: 30,
-  },
-
-  bottomText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
 });

@@ -66,157 +66,223 @@ export default function CarsScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
+    <View style={styles.background}>
+      <View style={styles.container}>
+        <Image source={logo} style={styles.logo} />
 
-      <Text style={styles.title}>Elkammaa Cars</Text>
+        <Text style={styles.brand}>ELKAMMAA CARS</Text>
 
-      <TextInput
-        style={styles.search}
-        placeholder="Chercher par marque ou catégorie..."
-        placeholderTextColor="#999"
-        value={search}
-        onChangeText={setSearch}
-      />
+        <Text style={styles.title}>Luxury Cars</Text>
 
-      <FlatList
-        data={filteredCars}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-          >
-            <Image
-              source={{
-                uri: `http://192.168.1.24/uandi/uploads/cars/${item.image}`,
-              }}
-              style={styles.image}
-            />
+        <Text style={styles.subtitle}>
+          Choose your perfect car for a premium driving experience.
+        </Text>
 
-            <Text style={styles.name}>
-              {item.marque} {item.modele}
-            </Text>
+        <TextInput
+          style={styles.search}
+          placeholder="Chercher par marque..."
+          placeholderTextColor="#CFCFCF"
+          value={search}
+          onChangeText={setSearch}
+        />
 
-            <Text style={styles.text}>
-              Année : {item.annee}
-            </Text>
+        <FlatList
+          data={filteredCars}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Image
+                source={{
+                  uri: `http://192.168.1.24/uandi/uploads/cars/${item.image}`,
+                }}
+                style={styles.image}
+              />
 
-            <Text style={styles.text}>
-              Carburant : {item.carburant}
-            </Text>
+              <Text style={styles.name}>
+                {item.marque} {item.modele}
+              </Text>
 
-            <Text style={styles.text}>
-              Transmission : {item.transmission}
-            </Text>
+              <View style={styles.infoRow}>
+                <Text style={styles.info}>Année : {item.annee}</Text>
+                <Text style={styles.info}>Places : {item.places}</Text>
+              </View>
 
-            <Text style={styles.text}>
-              Places : {item.places}
-            </Text>
+              <View style={styles.infoRow}>
+                <Text style={styles.info}>{item.carburant}</Text>
+                <Text style={styles.info}>{item.transmission}</Text>
+              </View>
 
-            <Text style={styles.price}>
-              {item.prix_par_jour} DH / jour
-            </Text>
+              <Text style={styles.price}>
+                {item.prix_par_jour} DH / jour
+              </Text>
+
+              <TouchableOpacity
+                style={styles.reserveButton}
+                onPress={() =>
+                  router.push({
+                    pathname: "/reservations",
+                    params: {
+                      id: item.id.toString(),
+                      marque: item.marque,
+                      modele: item.modele,
+                      prix: item.prix_par_jour,
+                      image: item.image,
+                    },
+                  })
+                }
+              >
+                <Text style={styles.reserveText}>Réserver maintenant</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          ListEmptyComponent={
+            <Text style={styles.empty}>Aucune voiture trouvée</Text>
+          }
+        />
+
+        <View style={styles.menu}>
+          <TouchableOpacity onPress={() => router.push("/")}>
+            <Text style={styles.menuText}>Home</Text>
           </TouchableOpacity>
-        )}
-        ListEmptyComponent={
-          <Text style={styles.empty}>
-            Aucune voiture trouvée
-          </Text>
-        }
-      />
 
-      <View style={styles.menu}>
-        <TouchableOpacity onPress={() => router.push("/")}>
-          <Text style={styles.menuText}>Home</Text>
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.menuTextActive}>Cars</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={styles.menuText}>Cars</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/reservations")}>
+            <Text style={styles.menuText}>Booking</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => router.push("/reservations")}
-        >
-          <Text style={styles.menuText}>Booking</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => router.push("/profile")}
-        >
-          <Text style={styles.menuText}>Profile</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/profile")}>
+            <Text style={styles.menuText}>Profile</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: "#050505",
+  },
+
   container: {
     flex: 1,
-    backgroundColor: "#000",
-    paddingTop: 50,
-    paddingHorizontal: 16,
+    paddingTop: 45,
+    paddingHorizontal: 18,
+  },
+
+  logo: {
+    width: 170,
+    height: 75,
+    alignSelf: "center",
+    marginBottom: 10,
+    resizeMode: "cover",
+    borderRadius: 22,
+  },
+
+  brand: {
+    color: "#fff",
+    fontSize: 14,
+    letterSpacing: 4,
+    textAlign: "center",
+    marginBottom: 8,
   },
 
   title: {
     color: "#fff",
-    fontSize: 30,
-    textAlign: "center",
-    marginBottom: 18,
+    fontSize: 36,
     fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  subtitle: {
+    color: "#d1d1d1",
+    textAlign: "center",
+    fontSize: 15,
+    lineHeight: 22,
+    marginTop: 10,
+    marginBottom: 24,
   },
 
   search: {
     backgroundColor: "rgba(255,255,255,0.08)",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.18)",
-    borderRadius: 18,
-    padding: 14,
+    borderColor: "rgba(255,255,255,0.20)",
+    borderRadius: 20,
+    padding: 15,
     color: "#fff",
-    marginBottom: 18,
+    marginBottom: 20,
   },
 
   list: {
-    paddingBottom: 100,
+    paddingBottom: 125,
   },
 
   card: {
     backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: 24,
-    padding: 14,
-    marginBottom: 18,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.15)",
+    borderColor: "rgba(255,255,255,0.14)",
+    borderRadius: 28,
+    padding: 14,
+    marginBottom: 22,
   },
 
   image: {
     width: "100%",
-    height: 190,
-    borderRadius: 18,
-    marginBottom: 14,
+    height: 195,
+    borderRadius: 24,
+    marginBottom: 15,
     resizeMode: "cover",
   },
 
   name: {
     color: "#fff",
-    fontSize: 22,
+    fontSize: 23,
     fontWeight: "bold",
+    marginBottom: 12,
+  },
+
+  infoRow: {
+    flexDirection: "row",
+    gap: 8,
     marginBottom: 8,
   },
 
-  text: {
-    color: "#CFCFCF",
-    marginBottom: 5,
-    fontSize: 14,
+  info: {
+    color: "#fff",
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.12)",
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    borderRadius: 14,
+    fontSize: 13,
   },
 
   price: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
-    marginTop: 10,
+    fontSize: 19,
+    marginTop: 8,
+  },
+
+  reserveButton: {
+    backgroundColor: "#fff",
+    paddingVertical: 16,
+    borderRadius: 18,
+    marginTop: 15,
+  },
+
+  reserveText: {
+    color: "#000",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 
   empty: {
@@ -229,18 +295,24 @@ const styles = StyleSheet.create({
   menu: {
     position: "absolute",
     bottom: 18,
-    left: 16,
-    right: 16,
+    left: 18,
+    right: 18,
     backgroundColor: "rgba(255,255,255,0.08)",
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 16,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.15)",
+    borderColor: "rgba(255,255,255,0.18)",
   },
 
   menuText: {
+    color: "#CFCFCF",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+
+  menuTextActive: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 14,
@@ -250,15 +322,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#000",
-  },
-
-  logo: {
-    width: 190,
-    height: 85,
-    alignSelf: "center",
-    marginBottom: 14,
-    resizeMode: "cover",
-    borderRadius: 24,
+    backgroundColor: "#050505",
   },
 });
